@@ -1,0 +1,141 @@
+﻿@using WebMatrix.Data;
+@using System.Data.Sql;
+
+@{
+    var name = "";
+
+
+
+    if (IsPost)
+    {
+        name = Request["AdminName"];
+        var db = Database.Open("coffee");
+        var deleteCommand = "DELETE FROM Admin WHERE AdminName = @0";
+        db.Execute(deleteCommand, name);
+        Response.Redirect("~/SearchAdmin");
+    }
+
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 20px;
+            color: #333;
+        }
+
+        input[type="submit"] {
+            background-color: #FF4500;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #FF6347;
+            }
+
+        button {
+            padding: 12px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #555;
+            }
+
+        .error-message {
+            color: #FF0000;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Delete an Admin</h1>
+    <form method="post">
+        <fieldset>
+            <legend>Admin Information</legend>
+            <p>
+                <label for="AdminName">AdminName:</label>
+                <input type="text" name="AdminName" value="@Request.Form["AdminName"]" required />
+            </p>
+
+            <p><input type="submit" name="buttonSubmit" value="Delete an Admin" /></p>
+
+            @if (IsPost && string.IsNullOrWhiteSpace(Request.Form["AdminName"]))
+            {
+                <p class="error-message">Please enter the AdminName.</p>
+            }
+        </fieldset>
+    </form>
+    <button onclick="returnToHomePage()">Home</button>
+    <script>
+        function returnToHomePage() {
+            window.location.href = 'AdminHome.cshtml';
+        }
+    </script>
+</body>
+</html>

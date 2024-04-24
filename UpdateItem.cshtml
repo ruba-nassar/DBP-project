@@ -1,0 +1,160 @@
+﻿@using WebMatrix.Data;
+@using System.Data.Sql;
+@{
+    var name = "";
+    var price = "";
+    var category = "";
+    var amount = "";
+    var id = "";
+
+
+
+    if (IsPost)
+    {
+        name = Request["ItemName"];
+        price = Request["ItemPrice"];
+        category = Request["ItemCategory"];
+        amount = Request["ItemAmount"];
+        id = Request["ItemId"];
+
+
+
+        var db = Database.Open("coffee");
+        var updateCommand = "Update  Item set  ItemName= @0, ItemPrice=@1 ,ItemCategory=@2 ,ItemAmount=@3  where ItemId = @4";
+        db.Execute(updateCommand,  name, price, category, amount, id);
+        Response.Redirect("~/SearchItem");
+    }
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 28px;
+            color: #555;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 18px;
+            color: #555;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #555;
+            }
+    </style>
+</head>
+<body>
+    <h1>Update an Item</h1>
+    <form method="post">
+        <fieldset>
+            <legend>Item Information</legend>
+
+            <p>
+                <label for="ItemId"> ItemId:</label>
+                <input type="text" name="ItemId" value="@Request.Form["ItemId"]" />
+            </p>
+            <p>
+                <label for="ItemName"> ItemName:</label>
+                <input type="text" name="ItemName" value="@Request.Form["ItemName"]" />
+            </p>
+            <p>
+                <label for="ItemPrice">ItemPrice:</label>
+                <input type="text" name="ItemPrice" value="@Request.Form["ItemPrice"]" />
+            </p>
+            <p>
+                <label for="ItemCategory">ItemCategory:</label>
+                <input type="text" name="ItemCategory" value="@Request.Form["ItemCategory"]" />
+            </p>
+
+            <p>
+                <label for="ItemAmount">ItemAmount:</label>
+                <input type="text" name="ItemAmount" value="@Request.Form["ItemAmount"]" />
+            </p>
+
+            <p><input type="submit" name="buttonSubmit" value="Update Item" /></p>
+        </fieldset>
+        <button onclick="returnToHomePage()">Home</button>
+        <script>
+            function returnToHomePage() {
+                window.location.href = 'ItemHome.cshtml';
+            }
+
+        </script>
+        
+    </form>
+</body>
+</html>

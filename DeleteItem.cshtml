@@ -1,0 +1,144 @@
+﻿@using WebMatrix.Data;
+@using System.Data.Sql;
+
+@{
+    var name = "";
+  
+    
+
+    if (IsPost)
+    {
+       name = Request["ItemName"];
+        var db = Database.Open("coffee");
+        var deleteCommand = "DELETE FROM Item WHERE ItemName = @0";
+        db.Execute(deleteCommand, name);
+        Response.Redirect("~/SearchItem");
+    }
+
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 20px;
+            color: #333;
+        }
+
+        input[type="submit"] {
+            background-color: #FF4500;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #FF6347;
+            }
+
+        button {
+            padding: 12px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #555;
+            }
+        .error-message {
+            color: #FF0000;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Delete an Item</h1>
+
+    <form method="post">
+        <fieldset>
+            <legend>Item Information</legend>
+            <p>
+                <label for="ItemName">ItemName:</label>
+                <input type="text" name="ItemName" value="@Request.Form["ItemName"]" required />
+            </p>
+
+
+            <p><input type="submit" name="buttonSubmit" value="Delete an item" /></p>
+            @if (IsPost && string.IsNullOrWhiteSpace(Request.Form["ItemName"]))
+            {
+                <p class="error-message">Please enter the ItemName.</p>
+            }
+        </fieldset>
+
+    </form>
+    <button onclick="returnToHomePage()">Home</button>
+    <script>
+        function returnToHomePage() {
+            window.location.href = 'ItemHome.cshtml';
+        }
+
+    </script>
+    
+</body>
+</html>

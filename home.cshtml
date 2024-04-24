@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Coffee Administration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 36px;
+        }
+
+        #coffee-cup {
+            width: 120px;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        .decorative-line {
+            width: 80%;
+            margin: 20px auto;
+            border-top: 2px solid #fff;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            width: 80%;
+        }
+
+            button:hover {
+                background-color: #45a049;
+            }
+    </style>
+</head>
+<body>
+    <img id="coffee-cup"img src="~/images/coffee-cup.png" />
+
+    <h1 style="color:forestgreen">Explore Coffee Administration</h1>
+
+    <div class="decorative-line"></div>
+
+    <p style="color:forestgreen">Welcome to our coffee shop admin page. Manage your coffee items and administrative settings with ease.</p>
+
+    <div class="decorative-line"></div>
+
+    <button onclick="redirectToPage1()">Go to Admin Page</button>
+    <button onclick="redirectToPage2()">Go to Item Page</button>
+
+    <script>
+        function redirectToPage1() {
+            window.location.href = 'AdminHome.cshtml';
+        }
+
+        function redirectToPage2() {
+            window.location.href = 'ItemHome.cshtml';
+        }
+    </script>
+</body>
+</html>
+
+
+

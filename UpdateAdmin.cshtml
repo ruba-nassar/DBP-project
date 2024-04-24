@@ -1,0 +1,174 @@
+﻿@using WebMatrix.Data;
+@using System.Data.Sql;
+@{
+    var name = "";
+    var number = "";
+    var email = "";
+    var id = "";
+
+
+
+    if (IsPost)
+    {
+        name = Request["AdminName"];
+        number = Request["AdminNumber"];
+        email = Request["AdminEmail"];
+        id = Request["AdminId"];
+
+
+
+        var db = Database.Open("coffee");
+        var updateCommand = "Update  Admin set  AdminName= @0, AdminNumber=@1 ,AdminEmail=@2   where AdminId = @3";
+        db.Execute(updateCommand, name, number, email,  id);
+        Response.Redirect("~/SearchAdmin");
+    }
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 28px;
+            color: #555;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 18px;
+            color: #555;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #555;
+            }
+        .error-message {
+            color: #FF0000;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Update an Admin</h1>
+    <form method="post">
+        <fieldset>
+            <legend>Admin Information</legend>
+
+            <p>
+                <label for="AdminId"> AdminId:</label>
+                <input type="text" name="AdminId" value="@Request.Form["AdminId"]" />
+                @if (IsPost && string.IsNullOrWhiteSpace(Request.Form["AdminId"]))
+                {
+                    <span class="error-message">AdminId is required.</span>
+                }
+            </p>
+            <p>
+                <label for="AdminName"> AdminName:</label>
+                <input type="text" name="AdminName" value="@Request.Form["AdminName"]" />
+                @if (IsPost && string.IsNullOrWhiteSpace(Request.Form["AdminName"]))
+                {
+                    <span class="error-message">AdminName is required.</span>
+                }
+            </p>
+            <p>
+                <label for="AdminNumber">AdminNumber:</label>
+                <input type="text" name="AdminNumber" value="@Request.Form["AdminNumber"]" />
+                @if (IsPost && string.IsNullOrWhiteSpace(Request.Form["AdminNumber"]))
+                {
+                    <span class="error-message">AdminNumber is required.</span>
+                }
+            </p>
+            <p>
+                <label for="AdminEmail">AdminEmail:</label>
+                <input type="text" name="AdminEmail" value="@Request.Form["AdminEmail"]" />
+                @if (IsPost && string.IsNullOrWhiteSpace(Request.Form["AdminEmail"]))
+                {
+                    <span class="error-message">AdminEmail is required.</span>
+                }
+            </p>
+
+
+            <p><input type="submit" name="buttonSubmit" value="Update Admin" /></p>
+        </fieldset>
+    </form>
+    <button onclick="returnToHomePage()">Home</button>
+    <script>
+  function returnToHomePage() {
+      window.location.href = 'AdminHome.cshtml';
+  }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Coffee Shop Navigation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 36px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 15px;
+            cursor: pointer;
+            background-color: #8B4513;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+            width: 60%;
+        }
+
+            button:hover {
+                background-color: #A0522D;
+            }
+    </style>
+</head>
+<body>
+    <h1 style="color:saddlebrown">Coffee Shop Navigation</h1>
+
+    <button onclick="returnToAddPage()">Add</button>
+    <button onclick="returnToDeletePage()">Delete</button>
+    <button onclick="returnToUpdatePage()">Update</button>
+    <button onclick="returnToSearchPage()">Search</button>
+
+    <button onclick="returnToHomePage()">Home</button>
+
+    <script>
+        function returnToHomePage() {
+            window.location.href = 'home.cshtml';
+        }
+
+        function returnToUpdatePage() {
+            window.location.href = 'UpdateAdmin.cshtml';
+        }
+
+        function returnToAddPage() {
+            window.location.href = 'AddAdmin.cshtml';
+        }
+
+        function returnToDeletePage() {
+            window.location.href = 'DeleteAdmin.cshtml';
+        }
+
+        function returnToSearchPage() {
+            window.location.href = 'SearchAdmin.cshtml';
+        }
+    </script>
+</body>
+</html>
+
+
+

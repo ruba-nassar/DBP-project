@@ -1,0 +1,164 @@
+﻿@using WebMatrix.Data;
+@using System.Data.Sql;
+
+@{
+    var name = "";
+    var price = "";
+    var category = "";
+    var amount = "";
+
+    if (IsPost)
+    {
+        name = Request["ItemName"];
+        price = Request["ItemPrice"];
+        category = Request["ItemCategory"];
+        amount = Request["ItemAmount"];
+
+        var db = Database.Open("coffee");
+        var insertCommand = "INSERT INTO   Item (  ItemName, ItemPrice ,ItemCategory ,ItemAmount) Values (@0 , @1 ,@2 , @3  )";
+        db.Execute(insertCommand, name, price, category, amount);
+        Response.Redirect("~/SearchItem");
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+            input:focus {
+                border-color: #4CAF50;
+            }
+
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 20px;
+            color: #333;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+
+        button {
+            padding: 12px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #555;
+            }
+
+        .error-message {
+            color: #FF0000;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add an Item</h1>
+    <form method="post">
+        <fieldset>
+            <legend>Item Information</legend>
+
+            <p>
+                <label for="ItemName">ItemName:</label>
+                <input type="text" name="ItemName" value="@Request.Form["ItemName"]" required />
+            </p>
+            <p>
+                <label for="ItemPrice">ItemPrice:</label>
+                <input type="text" name="ItemPrice" value="@Request.Form["ItemPrice"]" required />
+            </p>
+
+            <p>
+                <label for="ItemCategory">ItemCategory:</label>
+                <input type="text" name="ItemCategory" value="@Request.Form["ItemCategory"]" required />
+            </p>
+
+            <p>
+                <label for="ItemAmount">ItemAmount:</label>
+                <input type="text" name="ItemAmount" value="@Request.Form["ItemAmount"]" required />
+            </p>
+
+            <p><input type="submit" name="buttonSubmit" value="Add Item" /></p>
+
+            @if (IsPost && (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(price) || string.IsNullOrWhiteSpace(category) || string.IsNullOrWhiteSpace(amount)))
+            {
+                <p class="error-message">Please fill in all fields.</p>
+            }
+        </fieldset>
+    </form>
+    <button onclick="returnToHomePage()">Home</button>
+    <script>
+        function returnToHomePage() {
+            window.location.href = 'ItemHome.cshtml';
+        }
+    </script>
+</body>
+</html>
